@@ -1,0 +1,14 @@
+{
+  "name": "gustoautomate",
+  "version": "1.0.0",
+  "description": "Browser automator to add contractors in Gusto from Google Sheets data",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "node src/index.js --dry-run"
+  },
+  "type": "module",
+  "dependencies": {
+    "puppeteer-core": "^24.2.0"
+  }
+}

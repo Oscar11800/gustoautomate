@@ -4,50 +4,77 @@ import { log, shortDelay, sleep, typeHuman, waitForStableDOM } from './utils.js'
 const COL = CONFIG.sheets.columns;
 
 /**
+ * Find the Name Box input in Google Sheets using multiple selector strategies.
+ * Returns an ElementHandle or null.
+ */
+async function findNameBox(page) {
+  return page.evaluateHandle(() => {
+    // aria-label is the most stable across Sheets updates
+    let el = document.querySelector('input[aria-label="Name Box"]');
+    if (el) return el;
+
+    // Fallback: known auto-generated IDs (fragile, but fast)
+    for (const id of [':3', ':2', ':1', ':4']) {
+      el = document.getElementById(id);
+      if (el && el.tagName === 'INPUT') return el;
+    }
+
+    // Last resort: find an <input> whose value looks like a cell reference (e.g. "A1", "D69")
+    for (const input of document.querySelectorAll('input')) {
+      if (/^[A-Z]{1,3}\d{1,7}$/.test(input.value?.trim())) return input;
+    }
+
+    return null;
+  });
+}
+
+/**
  * Navigate to a specific cell using the Name Box (top-left cell reference input).
- * This is the most reliable way to navigate Google Sheets programmatically.
  */
 async function goToCell(page, cellRef) {
   log('data', `Navigating to cell ${cellRef}`);
-  // Click the Name Box (shows current cell reference like "A1")
-  const nameBox = '#\\:3';
-  try {
-    await page.click(nameBox);
-  } catch {
-    // Fallback: use Ctrl+G or click the element by its aria label
-    await page.keyboard.down('Control');
-    await page.keyboard.press('g');
-    await page.keyboard.up('Control');
-    await shortDelay(50, 80);
-  }
-  await shortDelay(30, 60);
 
-  // Type the cell reference
+  const nameBox = await findNameBox(page);
+  const isValid = await page.evaluate((el) => el instanceof HTMLInputElement, nameBox);
+
+  if (!isValid) {
+    throw new Error('Could not find the Google Sheets Name Box. Is the Sheets tab in focus?');
+  }
+
+  // Click the Name Box, select-all its text, type the new cell reference
+  await nameBox.click();
+  await shortDelay(30, 60);
   await page.keyboard.down('Meta');
   await page.keyboard.press('a');
   await page.keyboard.up('Meta');
   await shortDelay(10, 20);
   await page.keyboard.type(cellRef, { delay: 15 });
   await page.keyboard.press('Enter');
-  await shortDelay(50, 80);
+  await shortDelay(80, 120);
 }
 
 /**
- * Read the current cell's text value. Assumes the cell is already selected.
+ * Read the value of the currently selected cell via the formula bar.
+ * Uses multiple strategies because Google Sheets' DOM IDs are not stable.
  */
 async function readSelectedCellValue(page) {
-  // The formula bar input holds the current cell's value
   const value = await page.evaluate(() => {
-    // Try the formula bar textarea/input
-    const formulaBar = document.querySelector('.cell-input') 
-      || document.querySelector('#\\:5') 
-      || document.querySelector('[aria-label="Formula input"]');
-    if (formulaBar) return formulaBar.textContent || formulaBar.value || '';
-    
-    // Fallback: try to get from contenteditable
-    const cellInput = document.querySelector('.cell-input.editable');
-    if (cellInput) return cellInput.textContent || '';
-    
+    const selectors = [
+      '#formula_bar_id [contenteditable="true"]',
+      '[aria-label="Formula input"]',
+      '.cell-input',
+      '#\\:5',
+      '[role="textbox"][aria-label*="ormula"]',
+    ];
+    for (const sel of selectors) {
+      const el = document.querySelector(sel);
+      if (el) {
+        const text = (el.textContent || el.value || '').trim();
+        // Guard: ignore if it looks like a cell reference (Name Box leaking through)
+        if (text && !/^[A-Z]{1,3}\d{1,7}$/.test(text)) return text;
+        if (text) return text;  // even if it looks like a ref, return as last resort
+      }
+    }
     return '';
   });
   return value.trim();
@@ -58,14 +85,25 @@ async function readSelectedCellValue(page) {
  */
 export async function readCell(page, col, row) {
   const cellRef = `${col}${row}`;
-  await goToCell(page, cellRef);
-  await shortDelay(80, 100);
-  
-  // Read from the formula bar -- press Escape first to ensure we're not in edit mode
+
+  // Ensure we're not in edit mode before navigating
   await page.keyboard.press('Escape');
   await shortDelay(30, 50);
+
   await goToCell(page, cellRef);
-  await shortDelay(80, 100);
+  await shortDelay(100, 150);
+
+  // Verify the Name Box shows the cell we navigated to
+  const nameBoxValue = await page.evaluate(() => {
+    const el = document.querySelector('input[aria-label="Name Box"]')
+      || (() => { for (const i of document.querySelectorAll('input')) if (/^[A-Z]{1,3}\d{1,7}$/.test(i.value?.trim())) return i; return null; })();
+    return el?.value?.trim() ?? '';
+  });
+  if (nameBoxValue.toUpperCase() !== cellRef.toUpperCase()) {
+    log('warn', `Name Box shows "${nameBoxValue}" instead of "${cellRef}", retrying navigation...`);
+    await goToCell(page, cellRef);
+    await shortDelay(100, 150);
+  }
 
   const value = await readSelectedCellValue(page);
   log('data', `Cell ${cellRef} = "${value}"`);
@@ -83,11 +121,6 @@ export async function writeCell(page, col, row, value, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     log('data', `Writing "${value}" to cell ${cellRef} (attempt ${attempt})`);
 
-    await goToCell(page, cellRef);
-    await shortDelay(100, 150);
-
-    // Escape out of edit mode if we're in it, so the cell is in "ready" mode.
-    // In ready mode, typing replaces content without destroying data validation.
     await page.keyboard.press('Escape');
     await shortDelay(50, 80);
     await goToCell(page, cellRef);

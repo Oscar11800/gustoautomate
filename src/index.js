@@ -164,8 +164,14 @@ async function main() {
 
     // Pause between contractors to avoid Gusto server throttling
     if (CONFIG.delays.betweenContractors > 0) {
-      log('info', `Cooling down ${CONFIG.delays.betweenContractors}ms before next contractor...`);
+      log('info', `Cooling down ${CONFIG.delays.betweenContractors / 1000}s before next contractor...`);
       await sleep(CONFIG.delays.betweenContractors);
+    }
+
+    // Batch pause: every N successful contractors, take a longer break
+    if (results.processed > 0 && results.processed % CONFIG.delays.batchSize === 0) {
+      log('info', `=== Batch pause: ${results.processed} contractors done, resting ${CONFIG.delays.batchPause / 1000}s ===`);
+      await sleep(CONFIG.delays.batchPause);
     }
   }
 

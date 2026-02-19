@@ -1,0 +1,442 @@
+[
+  {
+    "name": "_dd_s",
+    "value": "aid=a0733473-6977-4813-a0b7-455ddd072170&rum=2&id=7ae108d8-72b6-471b-a028-67631958df9e&created=1771483361522&expire=1771485983123",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "gsid",
+    "value": "1771483047000",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "has_run_payroll",
+    "value": "true",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "has_signed_in",
+    "value": "true",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "is_payroll_admin",
+    "value": "true",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "fs_lua",
+    "value": "1.1771484936586",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_sp_id.372c",
+    "value": "2ba9cdfc-2f49-4335-a56c-2d16e7d6a14b.1771473149.2.1771484906.1771480835.4a079866-f384-41f4-8b95-f861d451fbc8.e085f300-9d04-4ed4-a44e-52ce2f981583.d9c6f42b-dd9d-4df3-8fa6-b6f8314c3d92.1771483377820.273",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_sp_ses.372c",
+    "value": "*",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "fs_uid",
+    "value": "#XVNS5#318373e8-3406-40f2-9108-aff224b83419:8da08507-14fb-40bc-be9c-ef733da5b200:1771483329132::1#ef11f82d#/1799453831",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "OptanonConsent",
+    "value": "isGpcEnabled=0&datestamp=Wed+Feb+18+2026+19:58:13+GMT-0800+(Pacific+Standard+Time)&version=202411.2.0&browserGpcFlag=0&isIABGlobal=false&identifierType=Cookie+Unique+Id&hosts=&consentId=56975a47-8e9c-4051-acaa-0ce0665df743&interactionCount=1&isAnonUser=1&landingPath=NotLandingPage&groups=C0001:1,C0003:1,C0002:1,C0004:1&AwaitingReconsent=false",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "exp_referral_incentive",
+    "value": "1500",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "exp_referral_incentive_type",
+    "value": "TIERED",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "exp_referral_promotional_amount",
+    "value": "500",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "prepopulate_remember_device",
+    "value": "0",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "respond_with_uuid_feature_flags",
+    "value": "0",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "invoca_session",
+    "value": "{\"ttl\":\"2026-03-21T02:52:32.057Z\",\"session\":{\"invoca_id\":\"i-17631822-2df8-42b9-c2a5-dc1284fe2616\"},\"config\":{\"ce\":true,\"fv\":false,\"rn\":false,\"ba\":true,\"br\":true}}",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_mkto_trk",
+    "value": "id:110-WOX-868&token:_mch-gusto.com-2e01ee9745598f008df4c8ab9c377fae",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "utag_main__sn",
+    "value": "20",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "utag_main_dc_visit",
+    "value": "20",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "utag_main_v_id",
+    "value": "019b9bf0f163002c5b0bc523ff0005075001206d00bd0",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_rdt_uuid",
+    "value": "1767847817652.e1404923-cbc9-4e5c-ac8a-49e826d11a62",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "tatari-session-cookie",
+    "value": "3aec2c57-5e9e-06e9-9694-04af9ea0892e",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "tatari-user-cookie",
+    "value": "812a1c5d-2bf4-4f53-9e3c-7df707acd8c7",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_ga_TXPRRPJLC5",
+    "value": "GS2.1.s1770339540$o17$g1$t1770339551$j49$l0$h0",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_fbp",
+    "value": "fb.1.1767847817909.355261503382272646",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "cb_group_id",
+    "value": "null",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "cb_user_id",
+    "value": "null",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_ga",
+    "value": "GA1.2.1995889615.1767847818",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_uetvid",
+    "value": "8774cef0ec4d11f0824969a313b3825c",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_li_ss",
+    "value": "CgA",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_gac_UA-34249893-4",
+    "value": "1.1769045108.CjwKCAiAj8LLBhAkEiwAJjbY75DOdZgfhKwqC7BAGb9zXsZtNi3XE5FhRYTWFaMgZmwxWHa9lWxN-hoCYxUQAvD_BwE",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_gcl_au",
+    "value": "1.1.2041496790.1767847818",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_gcl_aw",
+    "value": "GCL.1769045108.CjwKCAiAj8LLBhAkEiwAJjbY75DOdZgfhKwqC7BAGb9zXsZtNi3XE5FhRYTWFaMgZmwxWHa9lWxN-hoCYxUQAvD_BwE",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "ups_id",
+    "value": "81a37ef7-9f2e-4f1f-a297-bdd749cbea76",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "ups_id_origin_h",
+    "value": "ge0v7g1sTVxN/COu7C/vuuwDxzUnwVZjMJtMcNNG/7I=",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "visitor_id",
+    "value": "812a1c5d-2bf4-4f53-9e3c-7df707acd8c7",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "visitor_id_origin_h",
+    "value": "ge0v7g1sTVxN/COu7C/vuuwDxzUnwVZjMJtMcNNG/7I=",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "_lc2_fpi",
+    "value": "b014f62f4b06--01keg1m240bd1xbb4x2cew0qgp",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "eoy_audience",
+    "value": "00009",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "euids",
+    "value": "colzeJWU6PwugzeYOahNUP8m43F6nRioIShYCYVST9D/nvx9D/PdpNuU47oNa8vkw7Yvd/RgbEdiSSuAxqlF/wBfS/mc2069bue5pl8I3evmQxE3PgKZ/X2RnioSDjCw3DLjxfM=--SZUi4jZa+chNJ8hN--jLI91WLb58yRo9g0Sojt0Q==",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "csv_upload_viewed_popover_contractor-payments",
+    "value": "true",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "machine-fp",
+    "value": "1627435386",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "device_uuid",
+    "value": "eyJfcmFpbHMiOnsibWVzc2FnZSI6IklqRTRObVF5WkRJd0xURTNNalV0TkRsa05pMWhZek0yTFRVMU9EUTBZemMzWTJWbFlpST0iLCJleHAiOm51bGwsInB1ciI6ImNvb2tpZS5kZXZpY2VfdXVpZCJ9fQ==--9f6a91b703eed3e256f6edcea18601fb2d16ce5e",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__q_state_zjMhesSohJhoqBmS",
+    "value": "eyJ1dWlkIjoiZGUwYWY0MjgtMWJjOC00ZTY1LWFiZTMtYWIyYTJiNTUzNjllIiwiY29va2llRG9tYWluIjoiZ3VzdG8uY29tIiwibWVzc2VuZ2VyRXhwYW5kZWQiOmZhbHNlLCJwcm9tcHREaXNtaXNzZWQiOmZhbHNlLCJjb252ZXJzYXRpb25JZCI6IjE4MjM0MDY2NDAxMDc4MTY0MjgifQ==",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__qca",
+    "value": "P1-fa9d336c-7680-4efa-8bac-95fee1ef0f38",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "cb_anonymous_id",
+    "value": "\"16cefc58-69c7-4784-9f60-f4aff6d1b6a0\"",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__ps_did",
+    "value": "pscrb_708fb538-54cf-47fa-f0d3-05edd61af6f2",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__ps_fva",
+    "value": "1767847817697",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__ps_lu",
+    "value": "https://gusto.com/",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "__ps_r",
+    "value": "_",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "lp",
+    "value": "https://gusto.com/",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "so",
+    "value": "Direct",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "gafd_id",
+    "value": "c9ad77bb-5ea7-4f63-b452-f99433e64198",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "gexp_id",
+    "value": "a6e95e3a-9a52-4cda-b2a8-26a2ee4649fc",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  },
+  {
+    "name": "user_target_id",
+    "value": "031f1558-8f80-495d-ab04-9073fb521bd9",
+    "domain": ".app.gusto.com",
+    "path": "/",
+    "secure": true,
+    "httpOnly": false
+  }
+]

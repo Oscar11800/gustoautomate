@@ -4,6 +4,7 @@
   "description": "Browser automator to add contractors in Gusto from Google Sheets data",
   "main": "src/index.js",
   "scripts": {
+    "chrome": "bash launch-chrome.sh",
     "start": "node src/index.js",
     "dry-run": "node src/index.js --dry-run"
   },

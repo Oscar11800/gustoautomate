@@ -23,6 +23,8 @@ export const CONFIG = {
     typeMin: 10,
     typeMax: 30,
     pageTransition: 100,
-    betweenContractors: 1000,  // ms pause between contractor workflows to avoid server throttling
+    betweenContractors: 5000,  // 5s pause between contractors to avoid ThreatMetrix flagging
+    batchSize: 10,             // take a long break after this many contractors
+    batchPause: 6000,          // 6s batch pause
   },
 };

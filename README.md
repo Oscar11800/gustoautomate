@@ -13,19 +13,20 @@ Automates adding contractors to Gusto by reading data from a Google Sheet and dr
 npm install
 ```
 
-## Step 1: Launch Chrome with Debugging Port
+## Step 1: Launch the Automation Chrome
 
-**Close all existing Chrome windows first**, then run:
+Run the launch script to open a **separate** Chrome instance with its own profile. Your normal Chrome stays untouched and can keep running.
 
 ```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+npm run chrome
+# or: bash launch-chrome.sh
 ```
 
-This starts Chrome with a debug port that the script connects to.
+The first time, this Chrome will be a fresh instance — log into your Google and Gusto accounts. Those sessions are saved to `~/.gustoautomate-chrome-profile` and will persist for future runs.
 
 ## Step 2: Open Both Tabs and Log In
 
-Open these two tabs in that Chrome window and make sure you're logged in:
+Open these two tabs in the **automation Chrome window** and make sure you're logged in:
 
 1. **Google Sheet**: https://docs.google.com/spreadsheets/d/1gBryReeOb7g8zQBcmXZfL57p-kbcC-gC_xkCF_qqoFY/edit?gid=1879732679#gid=1879732679
 2. **Gusto**: https://app.gusto.com/
@@ -102,6 +103,6 @@ Edit `config.js` to change:
 
 **"No tab found matching..."** -- Make sure both the Google Sheet and Gusto tabs are open in the Chrome instance launched with `--remote-debugging-port=9222`.
 
-**"connect ECONNREFUSED"** -- Chrome isn't running with the debug port. Close Chrome fully and relaunch with the command above.
+**"connect ECONNREFUSED"** -- The automation Chrome isn't running. Launch it with `npm run chrome`.
 
 **Selectors not matching** -- Gusto may update their UI. Check the browser console or adjust selectors in `src/gusto.js`.

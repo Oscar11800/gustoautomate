@@ -30,15 +30,23 @@ async function findNameBox(page) {
 
 /**
  * Navigate to a specific cell using the Name Box (top-left cell reference input).
+ * Retries finding the Name Box for up to ~3 seconds in case the page is still loading.
  */
 async function goToCell(page, cellRef) {
   log('data', `Navigating to cell ${cellRef}`);
 
-  const nameBox = await findNameBox(page);
-  const isValid = await page.evaluate((el) => el instanceof HTMLInputElement, nameBox);
+  let nameBox;
+  let isValid = false;
+
+  for (let attempt = 0; attempt < 6; attempt++) {
+    nameBox = await findNameBox(page);
+    isValid = await page.evaluate((el) => el instanceof HTMLInputElement, nameBox);
+    if (isValid) break;
+    await sleep(500);
+  }
 
   if (!isValid) {
-    throw new Error('Could not find the Google Sheets Name Box. Is the Sheets tab in focus?');
+    throw new Error('Could not find the Google Sheets Name Box after retries. Is the Sheets tab in focus?');
   }
 
   // Click the Name Box, select-all its text, type the new cell reference
@@ -143,6 +151,24 @@ export async function writeCell(page, col, row, value, maxRetries = 3) {
   }
 
   log('err', `Failed to write "${value}" to ${cellRef} after ${maxRetries} attempts`);
+}
+
+/**
+ * Fast write: navigate to cell, type value, press Enter. No verification read-back.
+ */
+export async function writeCellFast(page, col, row, value) {
+  const cellRef = `${col}${row}`;
+  log('data', `Writing "${value}" to cell ${cellRef} (fast)`);
+
+  await page.keyboard.press('Escape');
+  await shortDelay(30, 50);
+  await goToCell(page, cellRef);
+  await shortDelay(50, 80);
+
+  await page.keyboard.type(value, { delay: 20 });
+  await page.keyboard.press('Enter');
+  await shortDelay(50, 80);
+  log('ok', `Wrote "${value}" to ${cellRef}`);
 }
 
 /**

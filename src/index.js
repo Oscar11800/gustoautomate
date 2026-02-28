@@ -3,6 +3,7 @@
 import { connectBrowser, findSheetsTab, findGustoTab, bringToFront } from './browser.js';
 import { readContractorRow, isRowCompleted, markRowCompleted } from './sheets.js';
 import { addContractor } from './gusto.js';
+import { getCachedRow, setCachedRow } from './cache.js';
 import { log, shortDelay, sleep } from './utils.js';
 import { CONFIG } from '../config.js';
 
@@ -14,9 +15,10 @@ function parseArgs() {
   const args = process.argv.slice(2);
   const opts = {
     startRow: 2,
-    endRow: null,   // null = keep going until empty row
+    endRow: null,
     dryRun: false,
     singleRow: null,
+    noCache: false,
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -36,6 +38,9 @@ function parseArgs() {
       case '--dry-run':
       case '-d':
         opts.dryRun = true;
+        break;
+      case '--no-cache':
+        opts.noCache = true;
         break;
       case '--help':
       case '-h':
@@ -85,7 +90,8 @@ async function main() {
   log('info', '========================================');
   log('info', ' Gusto Contractor Automator');
   log('info', '========================================');
-  log('info', `Config: startRow=${opts.startRow}, endRow=${opts.endRow ?? 'auto'}, dryRun=${opts.dryRun}`);
+  log('info', `Sheet: ${CONFIG.sheets.profileName}`);
+  log('info', `Config: startRow=${opts.startRow}, endRow=${opts.endRow ?? 'auto'}, dryRun=${opts.dryRun}, statusCol=${CONFIG.sheets.columns.status}, statusVal="${CONFIG.sheets.statusValue}"`);
 
   // Connect to Chrome
   const browser = await connectBrowser();
@@ -95,8 +101,8 @@ async function main() {
   log('ok', 'Both tabs found. Starting automation...');
   console.log('');
 
-  const results = { processed: 0, skipped: 0, failed: 0, errors: [] };
-  const maxEmptyRows = 3; // stop after 3 consecutive empty rows (when endRow is auto)
+  const results = { processed: 0, skipped: 0, cached: 0, failed: 0, errors: [] };
+  const maxEmptyRows = 3;
   let consecutiveEmpty = 0;
 
   for (let row = opts.startRow; ; row++) {
@@ -105,6 +111,17 @@ async function main() {
     if (!opts.endRow && consecutiveEmpty >= maxEmptyRows) {
       log('info', `Stopping: ${maxEmptyRows} consecutive empty rows detected at row ${row - maxEmptyRows}`);
       break;
+    }
+
+    // --- Fast path: check cache for already-sent rows ---
+    if (!opts.noCache) {
+      const cached = getCachedRow(row);
+      if (cached?.sent === true) {
+        log('info', `Row ${row}: cached as already sent (${cached.name ?? 'unknown'}), skipping`);
+        results.cached++;
+        consecutiveEmpty = 0;
+        continue;
+      }
     }
 
     log('info', `--- Row ${row} ---`);
@@ -116,6 +133,7 @@ async function main() {
     // Check if already completed
     const done = await isRowCompleted(sheetsPage, row);
     if (done) {
+      setCachedRow(row, { sent: true });
       results.skipped++;
       consecutiveEmpty = 0;
       continue;
@@ -126,10 +144,14 @@ async function main() {
     if (!contractor) {
       consecutiveEmpty++;
       log('warn', `Row ${row}: empty or missing data, skipping`);
+      setCachedRow(row, { sent: false, empty: true });
       results.skipped++;
       continue;
     }
     consecutiveEmpty = 0;
+
+    // Cache name for verify script to reuse
+    setCachedRow(row, { name: contractor.fullName });
 
     log('data', `Contractor: ${contractor.firstName} ${contractor.lastName} <${contractor.email}>`);
 
@@ -150,6 +172,7 @@ async function main() {
       await bringToFront(sheetsPage);
       await shortDelay(80, 100);
       await markRowCompleted(sheetsPage, row);
+      setCachedRow(row, { sent: true, name: contractor.fullName });
       results.processed++;
       log('ok', `Row ${row}: DONE -- ${contractor.firstName} ${contractor.lastName}`);
     } else {
@@ -157,7 +180,6 @@ async function main() {
       results.errors.push({ row, name: result.name, errors: result.errors, stepsCompleted: result.stepsCompleted });
       log('err', `Row ${row}: FAILED -- ${result.errors.join('; ')}`);
       log('err', `  Steps completed before failure: ${result.stepsCompleted.join(', ')}`);
-      // Continue to next row instead of crashing
     }
 
     console.log('');
@@ -182,6 +204,7 @@ async function main() {
   log('info', '========================================');
   log('info', `Processed: ${results.processed}`);
   log('info', `Skipped:   ${results.skipped}`);
+  log('info', `Cached:    ${results.cached}`);
   log('info', `Failed:    ${results.failed}`);
 
   if (results.errors.length > 0) {
